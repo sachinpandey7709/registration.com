@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Login & Registration Form HTML CSS | Sachin Kumar Pandey</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <img src="img.png" alt="">
+        <h2 class="text-right">Welcome</h2>
+
+        <div class="form-wrapper login">
+            <form action="https://sheetdb.io/api/v1/a4slecl1jw7yp" method="post" id="sheetdb-form">
+                <h2>Login</h2>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="mail"></ion-icon>
+                    </span>
+                    <input type="email" name="data[email]" placeholder="Email" required>
+                </div>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="lock-closed"></ion-icon>
+                    </span>
+                    <input type="password" name="data[password]" placeholder="Password" required>
+                    <i class="ri-eye-off-fill login__icon login__password" id="loginPasswordCreate"></i>
+                </div>
+                <div class="forgot-pass">
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit">Login</button>
+                <div class="sign-link">
+                    <p>Don't have an account? <a href="#" onclick="registerActive()">Register</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-wrapper register">
+            <form action="https://sheetdb.io/api/v1/gq1uxfbzmd9bk" method="post" id="sheetdb-form">
+                <h2>Registration</h2>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="person"></ion-icon>
+                    </span>
+                    <input type="text" name="data[name]" placeholder="Full Name" required>
+                </div>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="mail"></ion-icon>
+                    </span>
+                    <input type="email" name="data[email]" placeholder="Email" required>
+                </div>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="lock-closed"></ion-icon>
+                    </span>
+                    <input type="password" name="data[password]" placeholder="Password" required>
+                </div>
+                <button type="submit">Register</button>
+                <div class="sign-link">
+                    <p>Already have an account? <a href="#" onclick="loginActive()">Login</a></p>
+                </div>
+            </form>
+            <script>
+                var form = document.getElementById('sheetdb-form');
+                form.addEventListener("submit", e => {
+                    e.preventDefault();  // Fixed typo here
+                    fetch(form.action, {
+                        method: "POST",
+                        body: new FormData(document.getElementById("sheetdb-form")),
+                    })
+                    .then(response => response.json())
+                    .then(html => {  // Fixed syntax here
+                        // you can put any JS code here
+                        window.open('login.html', '_blank');  // Insert URL or target as needed
+                    });
+                });
+            </script>
+            <script>
+                var form = document.getElementById('sheetdb-form');
+                
+                form.addEventListener("submit", async (e) => {
+                    e.preventDefault();  // Prevents default form submission
+                    
+                    try {
+                        // Use fetch to send form data to the server
+                        let response = await fetch(form.action, {
+                            method: "POST",
+                            body: new FormData(form),
+                        });
+            
+                        // Parse the response as JSON
+                        let data = await response.json();
+            
+                        // Check if the request was successful
+                        if (response.ok && data.created === 1) {
+                            // Open a new blank window
+                            let newWindow = window.open('registered.html', '_blank');
+                            if (newWindow) {
+                                newWindow.document.write('<h1>Form Submitted Successfully!</h1>');
+                                newWindow.document.write('<p>Your registration was successful!</p>');
+                                newWindow.document.write('<p>Response Data: ' + JSON.stringify(data) + '</p>');
+                                // Optionally, you can display more information based on `data`
+                            }
+                        } else {
+                            console.error('Form submission failed:', data);
+                            alert('There was an error with your submission. Please try again.');
+                        }
+                    } catch (error) {
+                        // Handle network or other errors
+                        console.error('An error occurred:', error);
+                        alert('An error occurred while submitting the form. Please try again.');
+                    }
+                });
+            </script>
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
